@@ -70,6 +70,18 @@ router.put('/:id', (req, res) => {
     });
 });
 
+//Add points to user
+router.put('/points/:id', (req, res) => {
+  if (!req.body.points) req.body.points = 1;
+  User.findOneAndUpdate({ _id: req.params.id },{ $inc: { "points": req.body.points } } ,    { new: true },
+ (err, user) => {
+    if (err) return res.status(500).send({"message":"There was a problem updating the user."});
+    res.status(200).send(user);
+
+  });
+});
+
+
 // MAKES A SINGLE USER VIP
 router.put('/makeVip/:id', (req, res) => {
     User.findByIdAndUpdate(req.params.id, {isVip:true}, {new: true}, (err, user) => {

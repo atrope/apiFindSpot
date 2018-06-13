@@ -213,7 +213,48 @@
 					}
 				}
 			}
-    },"/user/login": {
+    },"/user/points/{id}": {
+      "put": {
+				"tags": [
+					"user"
+				],
+				"description": "Add/Remove points from User",
+				"produces": [
+					"application/json"
+				],
+				"parameters": [
+					{
+						"name": "id",
+						"in": "path",
+						"description": "ID of user to remove VIP",
+						"required": true,
+						"type": "integer"
+					},
+          {
+						"name": "points",
+						"in": "body",
+						"description": "points to give or take",
+						"required": true,
+						"schema": {
+        			"type": "object",
+        			"properties": {
+        				"points": {
+        					"type": "number"
+        				}        			}
+        		}
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "edited user",
+						"schema": {
+							"$ref": "#/definitions/User"
+						}
+					}
+				}
+			}
+    },
+    "/user/login": {
       "post": {
 				"tags": [
 					"user"
@@ -270,6 +311,9 @@
 						},
 						"isVip": {
 							"type": "boolean"
+						},
+						"points": {
+							"type": "number"
 						}
 					}
 				}
