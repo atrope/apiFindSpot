@@ -1,0 +1,293 @@
+{
+	"swagger": "2.0",
+	"info": {
+		"description": "Simple api for Managing the findSpot App.",
+		"version": "1.0.0",
+		"title": "findSpot API",
+		"contact": {
+			"email": "atrope@gmail.com"
+		}
+	},
+	"host": "rocky-chamber-96945.herokuapp.com",
+	"basePath": "/",
+	"tags": [
+		{
+			"name": "user",
+			"description": "Add/List/Update/Remove/Login User"
+		}
+	],
+	"schemes": [
+		"http"
+	],
+	"consumes": [
+		"application/json"
+	],
+	"produces": [
+		"application/json"
+	],
+	"paths": {
+		"/user": {
+			"get": {
+				"tags": [
+					"user"
+				],
+				"description": "Returns all categories",
+				"produces": [
+					"application/json"
+				],
+				"responses": {
+					"200": {
+						"description": "user response",
+						"schema": {
+							"type": "array",
+							"items": {
+								"$ref": "#/definitions/User"
+							}
+						}
+					}
+				}
+			},
+			"post": {
+				"tags": [
+					"user"
+				],
+				"description": "Creates a new User",
+				"produces": [
+					"application/json"
+				],
+				"parameters": [
+					{
+						"name": "user",
+						"in": "body",
+						"description": "User to add",
+						"required": true,
+						"schema": {
+							"$ref": "#/definitions/NewUser"
+						}
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "newly create user",
+						"schema": {
+							"$ref": "#/definitions/User"
+						}
+					}
+				}
+			}
+		},
+		"/user/{id}": {
+			"delete": {
+				"tags": [
+					"user"
+				],
+				"description": "deletes a user - deletes all companies also assigned to it",
+				"parameters": [
+					{
+						"name": "id",
+						"in": "path",
+						"description": "ID of user to delete",
+						"required": true,
+						"type": "integer"
+					}
+				],
+				"responses": {
+					"204": {
+						"description": "pet deleted"
+					}
+				}
+			},
+      "put": {
+				"tags": [
+					"user"
+				],
+				"description": "Edit a User",
+				"produces": [
+					"application/json"
+				],
+				"parameters": [
+					{
+						"name": "user",
+						"in": "body",
+						"description": "User to edit",
+						"required": true,
+						"schema": {
+							"$ref": "#/definitions/NewUser"
+						}
+					},
+					{
+						"name": "id",
+						"in": "path",
+						"description": "ID of user to delete",
+						"required": true,
+						"type": "integer"
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "edited user",
+						"schema": {
+							"$ref": "#/definitions/User"
+						}
+					}
+				}
+			},
+			"get": {
+				"tags": [
+					"user"
+				],
+				"description": "Gets a single user",
+				"produces": [
+					"application/json"
+				],
+				"parameters": [
+					{
+						"name": "id",
+						"in": "path",
+						"description": "ID of user to fetch",
+						"required": true,
+						"type": "integer"
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "User",
+						"schema": {
+							"$ref": "#/definitions/User"
+						}
+					}
+				}
+			}
+		},
+    "/user/makeVip/{id}": {
+      "put": {
+				"tags": [
+					"user"
+				],
+				"description": "Edit a User",
+				"produces": [
+					"application/json"
+				],
+				"parameters": [
+					{
+						"name": "id",
+						"in": "path",
+						"description": "Make VIP from User",
+						"required": true,
+						"type": "integer"
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "edited user",
+						"schema": {
+							"$ref": "#/definitions/User"
+						}
+					}
+				}
+			}
+    },"/user/removeVip/{id}": {
+      "put": {
+				"tags": [
+					"user"
+				],
+				"description": "remove VIP from User",
+				"produces": [
+					"application/json"
+				],
+				"parameters": [
+					{
+						"name": "id",
+						"in": "path",
+						"description": "ID of user to remove VIP",
+						"required": true,
+						"type": "integer"
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "edited user",
+						"schema": {
+							"$ref": "#/definitions/User"
+						}
+					}
+				}
+			}
+    },"/user/login": {
+      "post": {
+				"tags": [
+					"user"
+				],
+				"description": "Login user",
+				"produces": [
+					"application/json"
+				],
+				"parameters": [
+          {
+						"name": "user",
+						"in": "body",
+						"description": "User to edit",
+						"required": true,
+						"schema": {
+        			"type": "object",
+        			"properties": {
+        				"username": {
+        					"type": "string"
+        				},
+        				"password": {
+        					"type": "string"
+        				}
+        			}
+        		}
+					}
+				],
+				"responses": {
+          "200": {"description": "logged user"},
+          "403": {"description": "password not match"},
+          "404": {"description": "user not found"}
+
+				}
+			}
+    }
+	},
+	"definitions": {
+		"User": {
+			"type": "object",
+			"allOf": [
+				{
+					"properties": {
+						"_id": {
+							"type": "integer"
+						},
+						"name": {
+							"type": "string"
+						},
+						"username": {
+							"type": "string"
+						},
+						"password": {
+							"type": "string"
+						},
+						"isVip": {
+							"type": "boolean"
+						}
+					}
+				}
+			]
+		},
+		"NewUser": {
+			"type": "object",
+			"properties": {
+				"name": {
+					"type": "string"
+				},
+				"username": {
+					"type": "string"
+				},
+				"password": {
+					"type": "string"
+				}
+			}
+		}
+	}
+}
