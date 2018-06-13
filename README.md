@@ -7,7 +7,7 @@ findSpot Api
 Check full documentation in:
 
 ```
-****
+https://findspot.herokuapp.com
 ```
 
 
