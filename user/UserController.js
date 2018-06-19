@@ -15,7 +15,7 @@ router.post('/', (req, res) => {
       password : passwordHash.generate(req.body.password)
     },(err, user) => {
       if (err) return res.status(500).send({"message":"There was a problem creating the user."});
-      res.status(200).send();
+      res.status(200).send(user);
     });
     else res.status(400).send({"message":"All fields are required for this endpoint"});
 });
