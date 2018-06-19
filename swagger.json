@@ -502,7 +502,7 @@
 					}
 				}
 			}
-		},"/spot/unpark/{spotid}": {
+		},"/spot/park/{spotid}": {
 			"delete": {
 				"tags": [
 					"spot"
