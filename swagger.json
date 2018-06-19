@@ -411,7 +411,7 @@
 				"tags": [
 					"spot"
 				],
-				"description": "Edit a User",
+				"description": "Edit a Spot",
 				"produces": [
 					"application/json"
 				],
@@ -419,7 +419,7 @@
 					{
 						"name": "spot",
 						"in": "body",
-						"description": "User to edit",
+						"description": "Spot to edit",
 						"required": true,
 						"schema": {
 							"$ref": "#/definitions/NewSpot"
