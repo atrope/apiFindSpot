@@ -101,7 +101,7 @@
 					}
 				}
 			},
-      "put": {
+			"put": {
 				"tags": [
 					"user"
 				],
@@ -163,8 +163,8 @@
 				}
 			}
 		},
-    "/user/makeVip/{id}": {
-      "put": {
+		"/user/makeVip/{id}": {
+			"put": {
 				"tags": [
 					"user"
 				],
@@ -190,8 +190,9 @@
 					}
 				}
 			}
-    },"/user/removeVip/{id}": {
-      "put": {
+		},
+		"/user/removeVip/{id}": {
+			"put": {
 				"tags": [
 					"user"
 				],
@@ -217,8 +218,9 @@
 					}
 				}
 			}
-    },"/user/points/{id}": {
-      "put": {
+		},
+		"/user/points/{id}": {
+			"put": {
 				"tags": [
 					"user"
 				],
@@ -234,18 +236,19 @@
 						"required": true,
 						"type": "integer"
 					},
-          {
+					{
 						"name": "points",
 						"in": "body",
 						"description": "points to give or take",
 						"required": true,
 						"schema": {
-        			"type": "object",
-        			"properties": {
-        				"points": {
-        					"type": "number"
-        				}        			}
-        		}
+							"type": "object",
+							"properties": {
+								"points": {
+									"type": "number"
+								}
+							}
+						}
 					}
 				],
 				"responses": {
@@ -257,9 +260,9 @@
 					}
 				}
 			}
-    },
-    "/user/login": {
-      "post": {
+		},
+		"/user/login": {
+			"post": {
 				"tags": [
 					"user"
 				],
@@ -268,163 +271,297 @@
 					"application/json"
 				],
 				"parameters": [
-          {
+					{
 						"name": "user",
 						"in": "body",
 						"description": "User to edit",
 						"required": true,
 						"schema": {
-        			"type": "object",
-        			"properties": {
-        				"username": {
-        					"type": "string"
-        				},
-        				"password": {
-        					"type": "string"
-        				}
-        			}
-        		}
+							"type": "object",
+							"properties": {
+								"username": {
+									"type": "string"
+								},
+								"password": {
+									"type": "string"
+								}
+							}
+						}
 					}
 				],
 				"responses": {
-          "200": {"description": "logged user"},
-          "403": {"description": "password not match"},
-          "404": {"description": "user not found"}
-
+					"200": {
+						"description": "logged user"
+					},
+					"403": {
+						"description": "password not match"
+					},
+					"404": {
+						"description": "user not found"
+					}
 				}
 			}
-    },"/spot": {
-		  "get": {
-		    "tags": [
-		      "spot"
-		    ],
-		    "description": "Returns all spots",
-		    "produces": [
-		      "application/json"
-		    ],
-		    "responses": {
-		      "200": {
-		        "description": "spot response",
-		        "schema": {
-		          "type": "array",
-		          "items": {
-		            "$ref": "#/definitions/Spot"
-		          }
-		        }
-		      }
-		    }
-		  },
-		  "post": {
-		    "tags": [
-		      "spot"
-		    ],
-		    "description": "Creates a new Spot",
-		    "produces": [
-		      "application/json"
-		    ],
-		    "parameters": [
-		      {
-		        "name": "spot",
-		        "in": "body",
-		        "description": "Spot to add",
-		        "required": true,
-		        "schema": {
-		          "$ref": "#/definitions/NewSpot"
-		        }
-		      }
-		    ],
-		    "responses": {
-		      "200": {
-		        "description": "newly create spot",
-		        "schema": {
-		          "$ref": "#/definitions/Spot"
-		        }
-		      }
-		    }
-		  }
+		},
+		"/user/{id}/spot": {
+			"get": {
+				"tags": [
+					"user"
+				],
+				"description": "Retrieve the user spot",
+				"produces": [
+					"application/json"
+				],
+				"parameters": [
+					{
+						"name": "id",
+						"in": "path",
+						"description": "Id from user",
+						"required": true,
+						"type": "integer"
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "Spot",
+						"schema": {
+							"$ref": "#/definitions/Spot"
+						}
+					},
+					"204": {
+						"description": "User has no Spots"
+					},
+					"500": {
+						"description": "Error Occurred"
+					}
+				}
+			}
+		},
+		"/spot": {
+			"get": {
+				"tags": [
+					"spot"
+				],
+				"description": "Returns all spots",
+				"produces": [
+					"application/json"
+				],
+				"responses": {
+					"200": {
+						"description": "spot response",
+						"schema": {
+							"type": "array",
+							"items": {
+								"$ref": "#/definitions/Spot"
+							}
+						}
+					}
+				}
+			},
+			"post": {
+				"tags": [
+					"spot"
+				],
+				"description": "Creates a new Spot",
+				"produces": [
+					"application/json"
+				],
+				"parameters": [
+					{
+						"name": "spot",
+						"in": "body",
+						"description": "Spot to add",
+						"required": true,
+						"schema": {
+							"$ref": "#/definitions/NewSpot"
+						}
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "newly create spot",
+						"schema": {
+							"$ref": "#/definitions/Spot"
+						}
+					}
+				}
+			}
 		},
 		"/spot/{id}": {
-		  "delete": {
-		    "tags": [
-		      "spot"
-		    ],
-		    "description": "deletes a spot",
-		    "parameters": [
-		      {
-		        "name": "id",
-		        "in": "path",
-		        "description": "ID of spot to delete",
-		        "required": true,
-		        "type": "integer"
-		      }
-		    ],
-		    "responses": {
-		      "204": {
-		        "description": "spot deleted"
-		      }
-		    }
-		  },
-		  "put": {
-		    "tags": [
-		      "spot"
-		    ],
-		    "description": "Edit a User",
-		    "produces": [
-		      "application/json"
-		    ],
-		    "parameters": [
-		      {
-		        "name": "spot",
-		        "in": "body",
-		        "description": "User to edit",
-		        "required": true,
-		        "schema": {
-		          "$ref": "#/definitions/NewSpot"
-		        }
-		      },
-		      {
-		        "name": "id",
-		        "in": "path",
-		        "description": "ID of spot to delete",
-		        "required": true,
-		        "type": "integer"
-		      }
-		    ],
-		    "responses": {
-		      "200": {
-		        "description": "edited spot",
-		        "schema": {
-		          "$ref": "#/definitions/Spot"
-		        }
-		      }
-		    }
-		  },
-		  "get": {
-		    "tags": [
-		      "spot"
-		    ],
-		    "description": "Gets a single spot",
-		    "produces": [
-		      "application/json"
-		    ],
-		    "parameters": [
-		      {
-		        "name": "id",
-		        "in": "path",
-		        "description": "ID of spot to fetch",
-		        "required": true,
-		        "type": "integer"
-		      }
-		    ],
-		    "responses": {
-		      "200": {
-		        "description": "Spot",
-		        "schema": {
-		          "$ref": "#/definitions/Spot"
-		        }
-		      }
-		    }
-		  }
+			"delete": {
+				"tags": [
+					"spot"
+				],
+				"description": "deletes a spot",
+				"parameters": [
+					{
+						"name": "id",
+						"in": "path",
+						"description": "ID of spot to delete",
+						"required": true,
+						"type": "integer"
+					}
+				],
+				"responses": {
+					"204": {
+						"description": "spot deleted"
+					}
+				}
+			},
+			"put": {
+				"tags": [
+					"spot"
+				],
+				"description": "Edit a User",
+				"produces": [
+					"application/json"
+				],
+				"parameters": [
+					{
+						"name": "spot",
+						"in": "body",
+						"description": "User to edit",
+						"required": true,
+						"schema": {
+							"$ref": "#/definitions/NewSpot"
+						}
+					},
+					{
+						"name": "id",
+						"in": "path",
+						"description": "ID of spot to delete",
+						"required": true,
+						"type": "integer"
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "edited spot",
+						"schema": {
+							"$ref": "#/definitions/Spot"
+						}
+					}
+				}
+			},
+			"get": {
+				"tags": [
+					"spot"
+				],
+				"description": "Gets a single spot",
+				"produces": [
+					"application/json"
+				],
+				"parameters": [
+					{
+						"name": "id",
+						"in": "path",
+						"description": "ID of spot to fetch",
+						"required": true,
+						"type": "integer"
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "Spot",
+						"schema": {
+							"$ref": "#/definitions/Spot"
+						}
+					}
+				}
+			}
+		},
+		"/spot/park/{spotid}/{userid}": {
+			"put": {
+				"tags": [
+					"spot"
+				],
+				"description": "park User to Spot",
+				"produces": [
+					"application/json"
+				],
+				"parameters": [
+					{
+						"name": "spotid",
+						"in": "path",
+						"description": "ID of spot to park",
+						"required": true,
+						"type": "string"
+					},	{
+							"name": "userid",
+							"in": "path",
+							"description": "ID of user to park",
+							"required": true,
+							"type": "string"
+						}
+				],
+				"responses": {
+					"200": {
+						"description": "edited spot",
+						"schema": {
+							"$ref": "#/definitions/Spot"
+						}
+					}
+				}
+			}
+		},"/spot/unpark/{spotid}": {
+			"delete": {
+				"tags": [
+					"spot"
+				],
+				"description": "Remove any user from spot",
+				"produces": [
+					"application/json"
+				],
+				"parameters": [
+					{
+						"name": "spotid",
+						"in": "path",
+						"description": "ID of spot to clear",
+						"required": true,
+						"type": "string"
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "edited spot",
+						"schema": {
+							"$ref": "#/definitions/Spot"
+						}
+					}
+				}
+			}
+		},"/spot/search": {
+			"post": {
+				"tags": [
+					"spot"
+				],
+				"description": "Search for near spots",
+				"produces": [
+					"application/json"
+				],
+				"parameters": [
+					{
+            "name": "spot",
+            "in": "body",
+            "description": "User Location",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/NewSpot"
+            }
+          }
+
+				],
+				"responses": {
+					"200": {
+						"description": "Empty Spots found",
+						"schema": {
+							"type": "array",
+							"items": {
+								"$ref": "#/definitions/Spot"
+							}
+						}
+					}
+				}
+			}
 		}
 	},
 	"definitions": {
@@ -475,11 +612,11 @@
 				"_id": {
 					"type": "integer"
 				},
-				"lat": {
-					"type": "number"
+				"location": {
+					"$ref": "#/definitions/Location"
 				},
-				"long": {
-					"type": "number"
+				"takenBy": {
+					"type": "string"
 				}
 			}
 		},
@@ -491,6 +628,24 @@
 				},
 				"long": {
 					"type": "number"
+				}
+			}
+		},
+		"Location": {
+			"type": "object",
+			"properties": {
+				"type": {
+					"type": "string"
+				},
+				"coordinates": {
+					"type": "array",
+					"items": {
+						"type": "string"
+					},
+					"example": [
+						"lat",
+						"long"
+					]
 				}
 			}
 		}

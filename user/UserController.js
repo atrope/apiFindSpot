@@ -6,6 +6,8 @@ var passwordHash = require('password-hash');
 
 router.use(bodyParser.json());
 var User = require('./User');
+var Spot = require('../spot/Spot');
+
 // CREATES A NEW USER
 router.post('/', (req, res) => {
     if (req.body.name && req.body.username && req.body.password)
@@ -32,6 +34,18 @@ router.get('/:id', (req, res) => {
         if (err) return res.status(500).send({"message":"There was a problem finding the user."});
         if (!user) return res.status(404).send({"message":"No user found."});
         res.status(200).send(user);
+    });
+});
+
+router.get('/:id/spots', (req, res) => {
+    User.findById(req.params.id, (err, user) => {
+        if (err) return res.status(500).send({"message":"There was a problem finding the user."});
+        if (!user) return res.status(404).send({"message":"No user found."});
+        else Spot.findOne({ takenBy:user._id },function(err,spots) {
+            if (err) return res.status(500).send({"message":"There was a problem searching"});
+            else if (!spots) res.status(204).send();
+            else res.status(200).send(spots);
+        });
     });
 });
 
