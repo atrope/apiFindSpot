@@ -4,6 +4,8 @@ var app = express();
 var db = require('./db');
 var UserController = require('./user/UserController');
 var SpotController = require('./spot/SpotController');
+var cors = require('cors');
+
 const swaggerUi = require('swagger-ui-express');
 const swaggerDocument = require('./swagger.json');
 
