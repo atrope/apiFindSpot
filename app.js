@@ -8,7 +8,7 @@ const swaggerUi = require('swagger-ui-express');
 const swaggerDocument = require('./swagger.json');
 
 
-
+app.use(cors());
 app.use('/user', UserController);
 app.use('/spot', SpotController);
 app.use('/', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
