@@ -61,8 +61,11 @@ router.put('/:id', (req, res) => {
 
 
 router.post('/search', (req, res) => {
+  console.log(req.body);
   if (req.body.lat && req.body.long){
-    let loc = { location: { $nearSphere: { $geometry: { type: "Point", coordinates: [req.body.long,req.body.lat] }, $maxDistance: 1000 } } };
+    if (req.body.distance) let dist = req.body.distance;
+    else let dist = 1000;
+    let loc = { location: { $nearSphere: { $geometry: { type: "Point", coordinates: [req.body.long,req.body.lat] }, $maxDistance: dist } } };
     Spot.find({ $and: [ loc , { takenBy:null } ] },function(err,spots) {
               console.log(err);
               if (err) return res.status(500).send({"message":"There was a problem searching"});
