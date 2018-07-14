@@ -15,7 +15,6 @@ router.post('/', (req, res) => {
         spots.forEach((sp)=>sp.remove());
     });
     var expires = (req.body.ttl)? parseInt(req.body.ttl,10):300000;
-
     let spotcreate = {
       location: {coordinates : [req.body.long,req.body.lat]},
       savedBy:req.body.savedBy,
@@ -70,7 +69,6 @@ router.put('/:id', (req, res) => {
 
 
 router.post('/search', (req, res) => {
-  console.log(req.body);
   if (req.body.lat && req.body.long){
     var dist = 1000;
     if (req.body.distance) dist = req.body.distance;
@@ -91,6 +89,22 @@ router.post('/search/:userid', (req, res) => {
   });
 });
 
+
+router.post('/goingto/:spotid/:userid', (req, res) => {
+  Spot.findById(req.params.spotid, (err, spot) => {
+    if (!err){
+      User.findById(req.params.userid, (err, user) => {
+        if (!err){
+          User.findById(spot.savedBy, (err, savedUser) => {
+            if (!err){
+              let json = {spot:spot,taken:user,saved:savedUser};
+              io.emit(req.params.spotid,JSON.parse(json));
+              res.status(200).send(json);
+            }
+        })
+      }})
+    }})
+  });
 
 router.put('/park/:spotid/:userid', (req, res) => {
   User.findById(req.params.userid, (err, user) => {
