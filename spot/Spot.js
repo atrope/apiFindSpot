@@ -4,7 +4,7 @@ var SpotSchema = new mongoose.Schema({
           type: {type: String, default: 'Point'},
           coordinates: {type: [Number], default: [0, 0]}
       },
-      expires: { type: Date, default: Date.now() + 300000},
+      expires: { type: Date },
       points: { type: Number, default: 0},
       takenBy: { type: mongoose.Schema.Types.ObjectId,ref: 'User', default:null},
       savedBy: { type: mongoose.Schema.Types.ObjectId,ref: 'User', default:null}

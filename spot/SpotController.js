@@ -14,12 +14,14 @@ router.post('/', (req, res) => {
     Spot.find({savedBy:req.params.savedBy}, (err, spots) => {
         spots.forEach((sp)=>sp.remove());
     });
+    var expires = (req.body.ttl)? parseInt(req.body.ttl,10):300000;
+
     let spotcreate = {
       location: {coordinates : [req.body.long,req.body.lat]},
       savedBy:req.body.savedBy,
       points:req.body.points
+      expires = Date.now() + expires
     };
-    if (req.body.ttl) spotcreate.expires= Date.now() + parseInt(req.body.ttl,10);
     Spot.create(spotcreate,(err, spot) => {
       console.log(err);
       if (err) return res.status(500).send({"message":"There was a problem creating the spot."});
