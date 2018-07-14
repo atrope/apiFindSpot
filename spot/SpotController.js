@@ -10,15 +10,18 @@ var User = require('../user/User');
 
 // CREATES A NEW SPOT
 router.post('/', (req, res) => {
-    if (req.body.lat && req.body.long)
+    if (req.body.lat && req.body.long && req.body.savedBy){
+    Spot.remove({ savedBy: req.body.savedBy});
     Spot.create({
       location: {
         coordinates : [req.body.long,req.body.lat]
-      }
+      },
+      savedBy:req.body.savedBy
     },(err, spot) => {
       if (err) return res.status(500).send({"message":"There was a problem creating the spot."});
       res.status(200).send(spot);
     });
+  }
     else res.status(400).send({"message":"All fields are required for this endpoint"});
 });
 // RETURNS ALL THE SPOTS IN THE DATABASE
@@ -73,6 +76,13 @@ router.post('/search', (req, res) => {
     });
   }
     else res.status(400).send({"message":"All fields are required for this endpoint"});
+});
+
+router.post('/search/:userid', (req, res) => {
+  Spot.find({savedBy:req.params.userid}, (err, spots) => {
+      if (err) return res.status(500).send({"message":"There was a problem finding the spots."});
+      res.status(200).send(spots);
+  });
 });
 
 

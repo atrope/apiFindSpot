@@ -4,7 +4,9 @@ var SpotSchema = new mongoose.Schema({
           type: {type: String, default: 'Point'},
           coordinates: {type: [Number], default: [0, 0]}
       },
-  takenBy: { type: mongoose.Schema.Types.ObjectId,ref: 'User', default:null}
+      creationDate: { type: Date, default: Date.now},
+      takenBy: { type: mongoose.Schema.Types.ObjectId,ref: 'User', default:null},
+      savedBy: { type: mongoose.Schema.Types.ObjectId,ref: 'User', default:null}
 });
 mongoose.model('Spot', SpotSchema);
 
