@@ -10,15 +10,15 @@ var Spot = require('../spot/Spot');
 
 // CREATES A NEW USER
 router.post('/', (req, res) => {
-    if (req.body.name && req.body.username && req.body.password)
-    User.create({
-      name : req.body.name,
-      username : req.body.username,
-      password : passwordHash.generate(req.body.password)
-    },(err, user) => {
+    if (req.body.name && ((req.body.username && req.body.password) || req.body.fbid)){
+    let payload = {name:req.body.name}
+    if (req.body.fbid) payload.fbid = req.body.fbid;
+    else { payload.username = req.body.username;  payload.password = passwordHash.generate(req.body.password); }
+    User.create(payload,(err, user) => {
       if (err) return res.status(500).send({"message":"There was a problem creating the user."});
       res.status(200).send(user);
     });
+    }
     else res.status(400).send({"message":"All fields are required for this endpoint"});
 });
 // RETURNS ALL THE USERS IN THE DATABASE
@@ -58,6 +58,12 @@ router.post('/login', (req, res) => {
       if (!user) return res.status(404).send({"message":"No user found."});
       if (!passwordHash.verify(req.body.password, user.password)) return res.status(403).send({"message":"Password doesnt match."});
       res.status(200).send(user);
+});
+else if (req.body.fbid)
+User.findOne({fbid: req.body.fbid}, function(err, user) {
+    if (err) return res.status(500).send({"message":"There was a problem finding the user."});
+    if (!user) return res.status(404).send({"message":"No user found."});
+    res.status(200).send(user);
 });
 else res.status(400).send({"message":"All fields are required for this endpoint"});
 
