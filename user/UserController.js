@@ -12,7 +12,7 @@ var Spot = require('../spot/Spot');
 router.post('/', (req, res) => {
     if (req.body.name && ((req.body.username && req.body.password) || req.body.fbid)){
     let payload = {name:req.body.name}
-    if (req.body.fbid) payload.fbid = req.body.fbid;
+    if (req.body.fbid) { payload.fbid = req.body.fbid; payload.username = req.body.name.replace(" ",""); }
     else { payload.username = req.body.username;  payload.password = passwordHash.generate(req.body.password); }
     User.create(payload,(err, user) => {
       if (err) return res.status(500).send({"message":"There was a problem creating the user."});

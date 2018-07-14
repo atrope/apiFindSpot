@@ -1,7 +1,7 @@
 var mongoose = require('mongoose');
 var UserSchema = new mongoose.Schema({
   name: String,
-  fbid: String,
+  fbid: { type: String, default: "0" },
   username: String,
   password: String,
   isVip: { type: Boolean, default: false },
