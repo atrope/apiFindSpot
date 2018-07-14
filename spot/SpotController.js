@@ -19,8 +19,8 @@ router.post('/', (req, res) => {
     let spotcreate = {
       location: {coordinates : [req.body.long,req.body.lat]},
       savedBy:req.body.savedBy,
-      points:req.body.points
-      expires = Date.now() + expires
+      points:req.body.points,
+      expires : new Date().getTime() + expires
     };
     Spot.create(spotcreate,(err, spot) => {
       console.log(err);
