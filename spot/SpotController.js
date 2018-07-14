@@ -10,13 +10,14 @@ var User = require('../user/User');
 
 // CREATES A NEW SPOT
 router.post('/', (req, res) => {
-    if (req.body.lat && req.body.long && req.body.savedBy){
+    if (req.body.lat && req.body.long && req.body.savedBy && req.body.points){
     Spot.remove({ savedBy: req.body.savedBy});
     Spot.create({
       location: {
         coordinates : [req.body.long,req.body.lat]
       },
-      savedBy:req.body.savedBy
+      savedBy:req.body.savedBy,
+      points:req.body.points
     },(err, spot) => {
       if (err) return res.status(500).send({"message":"There was a problem creating the spot."});
       res.status(200).send(spot);

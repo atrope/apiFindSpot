@@ -5,6 +5,7 @@ var SpotSchema = new mongoose.Schema({
           coordinates: {type: [Number], default: [0, 0]}
       },
       creationDate: { type: Date, default: Date.now},
+      points: { type: Number, default: 0},
       takenBy: { type: mongoose.Schema.Types.ObjectId,ref: 'User', default:null},
       savedBy: { type: mongoose.Schema.Types.ObjectId,ref: 'User', default:null}
 });
