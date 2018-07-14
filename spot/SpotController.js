@@ -100,9 +100,9 @@ router.post('/goingto/:spotid/:userid', (req, res) => {
             if (!err){
               var expires = (req.body.ttl)? parseInt(req.body.ttl,10):300000;
               Spot.findByIdAndUpdate(req.params.spotid,{ expires:new Date().getTime() + expires}, {new: true}, (err, spot) => {
-                let json = {type:"start",spot:spot,taken:user,saved:savedUser};
-                io.emit(req.params.spotid,json);
-                res.status(200).send(json);
+                //let json = {spot:spot,taken:user,saved:savedUser};
+                //io.emit(savedUser._id,json);
+                res.status(200).send(spot);
             });
             }
         })
@@ -130,8 +130,5 @@ router.delete('/park/:spotid', (req, res) => {
         res.status(200).send(spot);
     });
 });
-
-
-
 
 module.exports = router;

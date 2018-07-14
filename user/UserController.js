@@ -129,4 +129,7 @@ router.put('/removeVip/:id', (req, res) => {
     });
 });
 
+router.post('/message/:id',(req,res)=>{
+  io.emit(req.params.id,req.body);
+})
 module.exports = router;
