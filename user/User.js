@@ -6,6 +6,7 @@ var UserSchema = new mongoose.Schema({
   password: String,
   isVip: { type: Boolean, default: false },
   points: { type: Number, default: 0 },
+  money: { type: Number, default: 0 },
 });
 mongoose.model('User', UserSchema);
 
