@@ -14,6 +14,7 @@ router.post('/', (req, res) => {
     let payload = {name:req.body.name}
     if (req.body.fbgpid) { payload.fbgpid = req.body.fbgpid; payload.username = req.body.name.replace(" ",""); }
     else { payload.username = req.body.username;  payload.password = passwordHash.generate(req.body.password); }
+    if (req.body.picture) payload.picture = req.body.picture;
     User.create(payload,(err, user) => {
       if (err) return res.status(500).send({"message":"There was a problem creating the user."});
       res.status(200).send(user);

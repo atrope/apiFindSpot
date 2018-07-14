@@ -3,6 +3,7 @@ var UserSchema = new mongoose.Schema({
   name: String,
   fbgpid: { type: String, default: "0" },
   username: String,
+  picture: { type: String, default: "./avatar.png" },
   password: String,
   isVip: { type: Boolean, default: false },
   points: { type: Number, default: 0 },
