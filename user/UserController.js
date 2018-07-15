@@ -103,16 +103,14 @@ router.put('/points/:id', (req, res) => {
 });
 
 //Add money to user
-router.put('/points/:id', (req, res) => {
+router.put('/money/:id', (req, res) => {
   if (!req.body.money) req.body.money = 1;
   User.findOneAndUpdate({ _id: req.params.id },{ $inc: { "money": req.body.money } } ,    { new: true },
  (err, user) => {
     if (err) return res.status(500).send({"message":"There was a problem updating the user."});
     res.status(200).send(user);
-
   });
 });
-
 
 // MAKES A SINGLE USER VIP
 router.put('/makeVip/:id', (req, res) => {
